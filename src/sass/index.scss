@@ -1,0 +1,137 @@
+.container{
+    width: 1200px;
+    margin: 0 auto;
+}
+img{
+    width: 100%;
+    height: auto;
+}
+
+a{
+    text-decoration: none;
+    color: #1a1919;
+}
+
+.search{
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+
+    padding: 15px 0;
+    background-color: rgb(29, 29, 233);
+
+    z-index: 999;
+
+    &__icon{
+        fill: #444444;
+
+        &:hover{
+            fill: #1a1919;
+        }
+    }
+
+    &__wrapper{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.search-form{
+    position: relative;
+    overflow: hidden;
+
+    width: 480px;
+
+    border: 1px solid #b4b4b4;
+    border-radius: 8px;
+}
+
+.search-form input{
+    padding: 15px;
+    width: 100%;
+    border: none;
+    outline: none;
+}
+
+.search-form button{
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+
+    height: 100%;
+    width: 42px;
+
+    background-color: rgb(230, 230, 230);
+
+    cursor: pointer;
+
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.gallery{
+    padding-top: 100px;
+    padding-bottom: 20px;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+
+    gap: 20px;
+}
+
+.gallery__item{
+    width: calc(25% - 30px);
+    box-shadow: 2px 2px 4px black;
+
+    transition: transform .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    z-index: 9;
+
+    &:hover{
+        transform: scale(1.1);
+    }
+}
+
+.info{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+    text-align: center;
+    font-size: 10px;
+}
+
+.load-more{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    width: 200px;
+    padding: 20px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    border: none;
+    border-radius: 12px;
+
+    color: #fff;
+    font-size: 20px;
+    background-color: rgb(29, 29, 233);
+
+    transition: background-color 1s cubic-bezier(0.075, 0.82, 0.165, 1) ;
+
+    cursor: pointer;
+
+    &:hover,
+    &:focus{
+        background-color: rgb(32, 32, 158);
+    }
+}
