@@ -43,8 +43,8 @@ async function fetchByName(name, page) {
     try{
         const response = await fetch(makeURL(name, page));
         const result = await response.json();
-        result.then(renderResult);
-    } catch(error) {
+        renderResult(result);
+    }catch(error){
         renderError(error);
     }
 }
