@@ -40,10 +40,13 @@ buttonLoadMoreRef.addEventListener('click', () => {
 });
 
 async function fetchByName(name, page) {
-    const response = await fetch(makeURL(name, page));
-    const result = await response.json();
-    result.then(renderResult)
-            .catch(renderError);
+    try{
+        const response = await fetch(makeURL(name, page));
+        const result = await response.json();
+        result.then(renderResult);
+    } catch(error) {
+        renderError(error);
+    }
 }
 
 function makeURL(name, page){
