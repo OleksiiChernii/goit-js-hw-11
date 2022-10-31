@@ -39,18 +39,15 @@ buttonLoadMoreRef.addEventListener('click', () => {
   fetchByName(searchValue, ++page);
 });
 
-function fetchByName(name, page) {
-  fetch(
-    `https://pixabay.com/api/?key=${apiKey}&q=${name}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${page}`
-  )
-    .then(respose => {
-      if (!respose.ok) {
-        return new Error(respose.status);
-      }
-      return respose.json();
-    })
-    .then(renderResult)
-    .catch(renderError);
+async function fetchByName(name, page) {
+    const response = await fetch(makeURL(name, page));
+    const result = await response.json();
+    result.then(renderResult)
+            .catch(renderError);
+}
+
+function makeURL(name, page){
+    return `https://pixabay.com/api/?key=${apiKey}&q=${name}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${page}`
 }
 
 function renderResult(result) {
@@ -103,5 +100,5 @@ function createResult({
 }
 
 function renderError(result) {
-  Notiflix.Notify.failure('Something goes wrong!');
+  Notiflix.Notify.failure('Something goes wrong! ' + result.message);
 }
