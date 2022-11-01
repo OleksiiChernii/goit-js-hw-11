@@ -1,6 +1,7 @@
 import Notiflix from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
+import axios from 'axios';
 
 const apiKey = '30908520-61e3e7767732b591b87412aca';
 const lightbox = new SimpleLightbox('.gallery a', {
@@ -28,10 +29,7 @@ searchFormRef.addEventListener('submit', event => {
   fetchByName(searchValue, 1);
 });
 
-window.addEventListener('load', () => {
-  buttonLoadMoreRef.style.display = 'none';
-  buttonLoadMoreRef.style.visibility = 'hidden';
-});
+window.addEventListener('load', hideButton);
 
 galleryRef.addEventListener('click', event => event.preventDefault());
 
@@ -40,17 +38,17 @@ buttonLoadMoreRef.addEventListener('click', () => {
 });
 
 async function fetchByName(name, page) {
-    try{
-        const response = await fetch(makeURL(name, page));
-        const result = await response.json();
-        renderResult(result);
-    }catch(error){
-        renderError(error);
-    }
+  try{
+    const response = await axios.get(makeURL(name, page));
+    const result = await response.data;
+    renderResult(result);
+  } catch (error){
+    renderError(error);
+  }
 }
 
 function makeURL(name, page){
-    return `https://pixabay.com/api/?key=${apiKey}&q=${name}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${page}`
+    return `https://pixabay.com/api/?key=${apiKey}&q=${name}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${page}`;
 }
 
 function renderResult(result) {
@@ -66,8 +64,7 @@ function renderResult(result) {
     Notiflix.Notify.info(`We're sorry, but you've reached the end of search results.`);
   }
   galleryRef.innerHTML += result.hits.map(createResult).join('');
-  buttonLoadMoreRef.style.display = 'block';
-  buttonLoadMoreRef.style.visibility = 'visible';
+  totalShowed >= result.totalHits ? hideButton() : showButton();
 
   const { height: cardHeight } = document
     .querySelector('.gallery')
@@ -104,4 +101,14 @@ function createResult({
 
 function renderError(result) {
   Notiflix.Notify.failure('Something goes wrong! ' + result.message);
+}
+
+function hideButton(){
+  buttonLoadMoreRef.style.display = 'none';
+  buttonLoadMoreRef.style.visibility = 'hidden';
+}
+
+function showButton(){
+  buttonLoadMoreRef.style.display = 'block';
+  buttonLoadMoreRef.style.visibility = 'visible';
 }
